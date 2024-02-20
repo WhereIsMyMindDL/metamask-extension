@@ -65,7 +65,7 @@ export default function CreatePassword({
   const [passwordStrength, setPasswordStrength] = useState('');
   const [passwordStrengthText, setPasswordStrengthText] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
-  const [termsChecked, setTermsChecked] = useState(false);
+  const [termsChecked, setTermsChecked] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const history = useHistory();
   const firstTimeFlowType = useSelector(getFirstTimeFlowType);
