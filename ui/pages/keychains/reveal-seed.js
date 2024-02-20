@@ -101,24 +101,6 @@ export default function RevealSeedPage() {
       });
   };
 
-  const renderWarning = () => {
-    return (
-      <BannerAlert severity={Severity.Danger}>
-        <Text variant={TextVariant.bodyMd}>
-          {t('revealSeedWordsWarning', [
-            <Text
-              key="reveal-seed-words-warning-2"
-              variant={TextVariant.bodyMdBold}
-              as="strong"
-            >
-              {t('revealSeedWordsWarning2')}
-            </Text>,
-          ])}
-        </Text>
-      </BannerAlert>
-    );
-  };
-
   const renderPasswordPromptContent = () => {
     return (
       <form onSubmit={handleSubmit}>
@@ -140,94 +122,6 @@ export default function RevealSeedPage() {
           <HelpText severity={HelpTextSeverity.Danger}>{error}</HelpText>
         )}
       </form>
-    );
-  };
-
-  const renderRevealSeedContent = () => {
-    // default for SRP_VIEW_SRP_TEXT event because this is the first thing shown after rendering
-    trackEvent({
-      category: MetaMetricsEventCategory.Keys,
-      event: MetaMetricsEventName.SrpViewSrpText,
-      properties: {
-        key_type: MetaMetricsEventKeyType.Srp,
-      },
-    });
-
-    return (
-      <div>
-        <Tabs
-          defaultActiveTabName={t('revealSeedWordsText')}
-          onTabClick={(tabName) => {
-            if (tabName === 'text-seed') {
-              trackEvent({
-                category: MetaMetricsEventCategory.Keys,
-                event: MetaMetricsEventName.SrpViewSrpText,
-                properties: {
-                  key_type: MetaMetricsEventKeyType.Srp,
-                },
-              });
-            } else if (tabName === 'qr-srp') {
-              trackEvent({
-                category: MetaMetricsEventCategory.Keys,
-                event: MetaMetricsEventName.SrpViewsSrpQR,
-                properties: {
-                  key_type: MetaMetricsEventKeyType.Srp,
-                },
-              });
-            }
-          }}
-        >
-          <Tab
-            name={t('revealSeedWordsText')}
-            className="reveal-seed__tab"
-            activeClassName="reveal-seed__active-tab"
-            tabKey="text-seed"
-          >
-            <Label marginTop={4}>{t('yourPrivateSeedPhrase')}</Label>
-            <ExportTextContainer
-              text={seedWords}
-              onClickCopy={() => {
-                trackEvent({
-                  category: MetaMetricsEventCategory.Keys,
-                  event: MetaMetricsEventName.KeyExportCopied,
-                  properties: {
-                    key_type: MetaMetricsEventKeyType.Srp,
-                    copy_method: 'clipboard',
-                  },
-                });
-                trackEvent({
-                  category: MetaMetricsEventCategory.Keys,
-                  event: MetaMetricsEventName.SrpCopiedToClipboard,
-                  properties: {
-                    key_type: MetaMetricsEventKeyType.Srp,
-                    copy_method: 'clipboard',
-                  },
-                });
-              }}
-            />
-          </Tab>
-          <Tab
-            name={t('revealSeedWordsQR')}
-            className="reveal-seed__tab"
-            activeClassName="reveal-seed__active-tab"
-            tabKey="qr-srp"
-          >
-            <Box
-              display={Display.Flex}
-              justifyContent={JustifyContent.center}
-              alignItems={AlignItems.center}
-              paddingTop={4}
-              data-testid="qr-srp"
-            >
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: renderQR().createTableTag(5, 15),
-                }}
-              />
-            </Box>
-          </Tab>
-        </Tabs>
-      </div>
     );
   };
 
@@ -281,30 +175,6 @@ export default function RevealSeedPage() {
           disabled={password === ''}
         >
           {t('next')}
-        </Button>
-      </Box>
-    );
-  };
-
-  const renderRevealSeedFooter = () => {
-    return (
-      <Box marginTop="auto">
-        <Button
-          variant={BUTTON_VARIANT.SECONDARY}
-          width={BlockSize.Full}
-          size={Size.LG}
-          onClick={() => {
-            trackEvent({
-              category: MetaMetricsEventCategory.Keys,
-              event: MetaMetricsEventName.SrpRevealCloseClicked,
-              properties: {
-                key_type: MetaMetricsEventKeyType.Srp,
-              },
-            });
-            history.push(mostRecentOverviewPage);
-          }}
-        >
-          {t('close')}
         </Button>
       </Box>
     );
