@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -30,12 +30,22 @@ import {
 } from '../../../components/component-library';
 
 export default function SkipSRPBackup({ handleClose }) {
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(true);
   const t = useI18nContext();
   const history = useHistory();
   const dispatch = useDispatch();
   const trackEvent = useContext(MetaMetricsContext);
 
+  useEffect(() => {
+    dispatch(setSeedPhraseBackedUp(false));
+    trackEvent({
+      category: MetaMetricsEventCategory.Onboarding,
+      event:
+        MetaMetricsEventName.OnboardingWalletSecuritySkipConfirmed,
+    });
+    history.push(ONBOARDING_COMPLETION_ROUTE);
+  }, [])
+  
   return (
     <Popover
       className="skip-srp-backup-popover"
