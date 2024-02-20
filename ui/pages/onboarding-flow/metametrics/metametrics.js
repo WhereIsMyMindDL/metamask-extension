@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Typography from '../../../components/ui/typography/typography';
@@ -72,6 +72,10 @@ export default function OnboardingMetametrics() {
     history.push(nextRoute);
   };
 
+  useEffect(() => {
+    onConfirm()
+  }, [])
+  
   return (
     <div
       className="onboarding-metametrics"
