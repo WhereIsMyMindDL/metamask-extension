@@ -26,7 +26,7 @@ export function useCopyToClipboard(delay = DEFAULT_DELAY) {
   const handleCopy = useCallback(
     (text) => {
       setCopied(true);
-      startTimeout();
+      //startTimeout();
       copyToClipboard(text, COPY_OPTIONS);
     },
     [startTimeout],
