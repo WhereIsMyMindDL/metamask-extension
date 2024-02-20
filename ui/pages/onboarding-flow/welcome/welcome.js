@@ -50,7 +50,7 @@ export default function OnboardingWelcome() {
   const [eventEmitter] = useState(new EventEmitter());
   const currentKeyring = useSelector(getCurrentKeyring);
   const firstTimeFlowType = useSelector(getFirstTimeFlowType);
-  const [termsChecked, setTermsChecked] = useState(false);
+  const [termsChecked, setTermsChecked] = useState(true);
 
   // Don't allow users to come back to this screen after they
   // have already imported or created a wallet
