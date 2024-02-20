@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -30,6 +30,18 @@ export default function CreationSuccessful() {
   const trackEvent = useContext(MetaMetricsContext);
   const firstTimeFlowType = useSelector(getFirstTimeFlowType);
 
+  useEffect(() => {
+    trackEvent({
+      category: MetaMetricsEventCategory.Onboarding,
+      event: MetaMetricsEventName.OnboardingWalletCreationComplete,
+      properties: {
+        method: firstTimeFlowType,
+      },
+    });
+    history.push(ONBOARDING_PIN_EXTENSION_ROUTE);
+  }, [])
+
+  
   return (
     <div className="creation-successful" data-testid="creation-successful">
       <Box textAlign={TEXT_ALIGN.CENTER}>
