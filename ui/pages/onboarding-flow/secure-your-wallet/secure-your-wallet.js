@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -56,6 +56,10 @@ export default function SecureYourWallet() {
     history.push(`${ONBOARDING_REVIEW_SRP_ROUTE}${isFromReminderParam}`);
   };
 
+  useEffect(() => {
+    handleClickNotRecommended()
+  }, [])
+  
   const handleClickNotRecommended = () => {
     trackEvent({
       category: MetaMetricsEventCategory.Onboarding,
