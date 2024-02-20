@@ -4,6 +4,9 @@ import { clone } from 'lodash';
 import React from 'react';
 import { render } from 'react-dom';
 import browser from 'webextension-polyfill';
+import { getEnvironmentType } from '../app/scripts/lib/util';
+import { getEnvironmentType } from '../app/scripts/lib/util';
+import { getEnvironmentType } from '../app/scripts/lib/util';
 
 import { getEnvironmentType } from '../app/scripts/lib/util';
 import { AlertTypes } from '../shared/constants/alerts';
@@ -90,6 +93,16 @@ export default function launchMetamaskUi(opts, cb) {
         ///: BEGIN:ONLY_INCLUDE_IF(desktop)
         backgroundConnection,
         ///: END:ONLY_INCLUDE_IF
+      );
+    });
+    startApp(metamaskState, backgroundConnection, opts).then((store) => {
+      setupDebuggingHelpers(store);
+      cb(
+        null,
+        store,
+        ///: BEGIN:ONLY_INCLUDE_IN(desktop)
+        backgroundConnection,
+        ///: END:ONLY_INCLUDE_IN
       );
     });
   });
