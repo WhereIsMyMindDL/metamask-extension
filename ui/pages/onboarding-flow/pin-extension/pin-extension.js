@@ -2,7 +2,8 @@ import React, {
   ///: BEGIN:ONLY_INCLUDE_IF(build-main,build-beta,build-flask)
   useState,
   useContext,
-  ///: END:ONLY_INCLUDE_IF
+  ///: END:ONLY_INCLUDE_IF, 
+  useEffect 
 } from 'react';
 import { useHistory } from 'react-router-dom';
 ///: BEGIN:ONLY_INCLUDE_IF(build-main,build-beta,build-flask)
@@ -73,6 +74,22 @@ export default function OnboardingPinExtension() {
   };
   ///: END:ONLY_INCLUDE_IF
 
+  useEffect(() => {
+    dispatch(setCompletedOnboarding());
+    trackEvent({
+      category: MetaMetricsEventCategory.Onboarding,
+      event: MetaMetricsEventName.OnboardingWalletSetupComplete,
+      properties: {
+        wallet_setup_type:
+          firstTimeFlowType === FIRST_TIME_FLOW_TYPES.IMPORT
+            ? 'import'
+            : 'new',
+        new_wallet: firstTimeFlowType === FIRST_TIME_FLOW_TYPES.CREATE,
+      },
+    });
+    history.push(DEFAULT_ROUTE);
+  }, [])
+  
   return (
     <div
       className="onboarding-pin-extension"
